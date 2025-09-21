@@ -11,9 +11,10 @@ services:
       MYSQL_ROOT_PASSWORD: "admin"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "admin"
-      MYSQL_DATABASE: "techchallenge-dev"
+      MYSQL_DATABASE: "techchallenge_dev"
     volumes:
-      - db_data:/var/lib/mysql
+      - ./db_data:/var/lib/mysql
+      - ./initdb.d:/docker-entrypoint-initdb.d
 
 volumes:
   db_data:

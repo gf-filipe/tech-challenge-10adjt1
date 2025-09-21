@@ -57,4 +57,12 @@ public abstract class Usuario implements Serializable {
         setDataUltimaAlteracao(Instant.now());
         setEndereco(null);
     }
+
+    public Usuario(String nome, String email, String senha, Endereco endereco) {
+        setNome(nome);
+        setEmail(email);
+        setSenha(senha);
+        setDataUltimaAlteracao(Instant.now());
+        setEndereco(endereco);
+    }
 }
