@@ -38,6 +38,7 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente update(ClienteDTO clienteDTO, Long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow();
         BeanUtils.copyProperties(clienteDTO, cliente);
+        //BeanUtils.copyProperties(cliente, clienteDTO);
         return clienteRepository.save(cliente);
     }
 

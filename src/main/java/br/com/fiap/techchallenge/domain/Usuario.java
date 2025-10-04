@@ -42,10 +42,13 @@ public abstract class Usuario implements Serializable {
     @Column(name = "senha", nullable = false)
     private String senha;
 
+    @Transient
+    private String senhaOld;
+
     @Column(name = "data_ultima_alteracao")
     private Instant dataUltimaAlteracao;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
@@ -55,7 +58,6 @@ public abstract class Usuario implements Serializable {
         setEmail(email);
         setSenha(senha);
         setDataUltimaAlteracao(Instant.now());
-        setEndereco(null);
     }
 
     public Usuario(String nome, String email, String senha, Endereco endereco) {
@@ -63,6 +65,6 @@ public abstract class Usuario implements Serializable {
         setEmail(email);
         setSenha(senha);
         setDataUltimaAlteracao(Instant.now());
-        setEndereco(endereco);
+        //setEndereco(endereco);
     }
 }
