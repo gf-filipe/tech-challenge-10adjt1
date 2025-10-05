@@ -1,7 +1,9 @@
 package br.com.fiap.techchallenge.controllers;
 
+import br.com.fiap.techchallenge.controllers.dto.ClienteEmailDTO;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioDTO;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioPasswordDTO;
+import br.com.fiap.techchallenge.domain.Cliente;
 import br.com.fiap.techchallenge.domain.Usuario;
 import br.com.fiap.techchallenge.services.UsuarioService;
 import lombok.AllArgsConstructor;
@@ -22,14 +24,17 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDTO>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAll());
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> getById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getById(id));
     }
-
+    @GetMapping("/busca-nome/{nome}")
+    public ResponseEntity<UsuarioDTO> getByNome(@PathVariable String nome){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getByNome(nome));
+    }
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> updateSenha(@PathVariable Long id, @RequestBody UsuarioPasswordDTO senha){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateSenha(id, senha));
+    public ResponseEntity<Object> updateSenha(@PathVariable Long id, @RequestBody UsuarioPasswordDTO usuarioPasswordDTO){
+        usuarioService.updateSenha(id, usuarioPasswordDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("Senha alterada com sucesso");
     }
 }

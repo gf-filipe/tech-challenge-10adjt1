@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -12,6 +13,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -45,6 +47,9 @@ public abstract class Usuario implements Serializable {
     @Transient
     private String senhaOld;
 
+    @Column(name = "data_criacao")
+    private Instant dataCriacao;
+
     @Column(name = "data_ultima_alteracao")
     private Instant dataUltimaAlteracao;
 
@@ -65,6 +70,5 @@ public abstract class Usuario implements Serializable {
         setEmail(email);
         setSenha(senha);
         setDataUltimaAlteracao(Instant.now());
-        //setEndereco(endereco);
     }
 }

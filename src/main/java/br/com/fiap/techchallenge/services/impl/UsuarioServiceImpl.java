@@ -6,11 +6,11 @@ import br.com.fiap.techchallenge.domain.Usuario;
 import br.com.fiap.techchallenge.repositories.UsuarioRepository;
 import br.com.fiap.techchallenge.services.UsuarioService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,15 +20,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     UsuarioRepository usuarioRepository;
 
     @Override
-    public Usuario updateSenha(Long id, UsuarioPasswordDTO usuarioPasswordDTO) {
-        Usuario usuario = usuarioRepository.findById(id).get();
-        //if(!usuarioPasswordDTO.equals(usuario.getSenha())){
-        if(!usuario.getSenha().equals(usuarioPasswordDTO.getSenha())){
-            BeanUtils.copyProperties(usuarioPasswordDTO,usuario);
-            return usuarioRepository.save(usuario);
+    public void updateSenha(Long id, UsuarioPasswordDTO usuarioPasswordDTO) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+        if(usuario.getSenha().equals(usuarioPasswordDTO.getSenha())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A nova senha não pode ser igual à senha antiga.");
         }else{
-            System.out.println("Email é igual ao antigo");
-            return usuario;
+            usuario.setSenha(usuarioPasswordDTO.getSenha());
+            usuario.setDataUltimaAlteracao(Instant.now());
+            usuarioRepository.save(usuario);
         }
     }
 
@@ -44,6 +44,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTO getById(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+        return new UsuarioDTO(usuario);
+    }
+
+    @Override
+    public UsuarioDTO getByNome(String nome) {
+        Usuario usuario = usuarioRepository.findByNome(nome);
+        if(usuario == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "usuário não encontrado.");
+        }
         return new UsuarioDTO(usuario);
     }
 }

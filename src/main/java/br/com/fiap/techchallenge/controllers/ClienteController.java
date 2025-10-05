@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.controllers;
 
-import br.com.fiap.techchallenge.controllers.dto.ClienteDTO;
-import br.com.fiap.techchallenge.controllers.dto.ClienteEmailDTO;
+import br.com.fiap.techchallenge.controllers.dto.ClienteRequestDTO;
+import br.com.fiap.techchallenge.controllers.dto.ClienteResponseDTO;
 import br.com.fiap.techchallenge.domain.Cliente;
 import br.com.fiap.techchallenge.services.ClienteService;
 import lombok.AllArgsConstructor;
@@ -17,24 +17,20 @@ import java.util.List;
 public class ClienteController {
     private final ClienteService clienteService;
     @GetMapping
-    public ResponseEntity<List<ClienteDTO>> getAllCliente(){
+    public ResponseEntity<List<ClienteResponseDTO>> getAllCliente(){
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.getAll());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDTO> getClienteById(@PathVariable Long id){
+    public ResponseEntity<ClienteResponseDTO> getClienteById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.getById(id));
     }
     @PostMapping
-    public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDTO clienteDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(clienteDTO));
+    public ResponseEntity<ClienteResponseDTO> createCliente(@RequestBody ClienteRequestDTO clienteRequestDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(clienteRequestDTO));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> updateCliente(@RequestBody ClienteDTO clienteDTO, @PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.update(clienteDTO, id));
-    }
-    @PatchMapping("/{id}")
-    public ResponseEntity<Cliente> patchSenhaCliente(@RequestBody ClienteEmailDTO clienteEmailDTO, @PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.updateEmail(clienteEmailDTO, id));
+    public ResponseEntity<ClienteResponseDTO> updateCliente(@RequestBody ClienteRequestDTO clienteRequestDTO, @PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.update(clienteRequestDTO, id));
     }
     @DeleteMapping("/{id}")
     public Object deleteCliente(@PathVariable Long id){

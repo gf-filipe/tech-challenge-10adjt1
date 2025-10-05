@@ -1,21 +1,21 @@
 package br.com.fiap.techchallenge.services;
 
-import br.com.fiap.techchallenge.controllers.dto.ClienteDTO;
+import br.com.fiap.techchallenge.controllers.dto.ClienteRequestDTO;
+import br.com.fiap.techchallenge.controllers.dto.ClienteResponseDTO;
 import br.com.fiap.techchallenge.controllers.dto.ClienteEmailDTO;
 import br.com.fiap.techchallenge.domain.Cliente;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ClienteService {
 
-    List<ClienteDTO> getAll();
+    List<ClienteResponseDTO> getAll();
 
-    ClienteDTO getById(Long id);
+    ClienteResponseDTO getById(Long id);
 
-    Cliente create(ClienteDTO clienteDTO);
+    ClienteResponseDTO create(ClienteRequestDTO clienteRequestDTO);
 
-    Cliente update(ClienteDTO clienteDTO, Long id);
+    ClienteResponseDTO update(ClienteRequestDTO clienteRequestDTO, Long id);
 
     Cliente updateEmail(ClienteEmailDTO clienteEmailDTO, Long id);
 
