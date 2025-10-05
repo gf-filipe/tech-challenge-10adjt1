@@ -10,7 +10,4 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-    @Query("SELECT c FROM Cliente c WHERE c.id = :id")
-    Optional<ClienteResponseDTO> findByIdClienteDTO(Long id);
-}
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {}

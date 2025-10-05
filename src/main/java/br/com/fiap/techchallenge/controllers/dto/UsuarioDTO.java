@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 import java.time.Instant;
 
@@ -23,6 +24,7 @@ public class UsuarioDTO {
     private Instant dataCriacao;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", timezone = "America/Sao_Paulo")
     private Instant dataUltimaAlteracao;
+    private EnderecoDTO endereco;
 
     public UsuarioDTO(Usuario usuario) {
         this.id = usuario.getId();
@@ -37,6 +39,11 @@ public class UsuarioDTO {
             this.tipo = "CLIENTE";
         } else if (usuario instanceof DonoRestaurante) {
             this.tipo = "DONO_RESTAURANTE";
+        }
+
+        if(usuario.getEndereco() != null) {
+            this.endereco = new EnderecoDTO();
+            BeanUtils.copyProperties(usuario.getEndereco(), this.endereco);
         }
     }
 

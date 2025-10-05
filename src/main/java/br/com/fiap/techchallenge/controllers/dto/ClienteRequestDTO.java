@@ -17,6 +17,7 @@ public class ClienteRequestDTO {
     private String nome;
     private String email;
     private String senha;
+    private EnderecoDTO endereco;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", timezone = "America/Sao_Paulo")
     private Instant dataCriacao;

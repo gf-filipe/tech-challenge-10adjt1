@@ -4,7 +4,9 @@ import br.com.fiap.techchallenge.controllers.dto.ClienteRequestDTO;
 import br.com.fiap.techchallenge.controllers.dto.ClienteResponseDTO;
 import br.com.fiap.techchallenge.controllers.dto.ClienteEmailDTO;
 import br.com.fiap.techchallenge.domain.Cliente;
+import br.com.fiap.techchallenge.domain.Endereco;
 import br.com.fiap.techchallenge.repositories.ClienteRepository;
+import br.com.fiap.techchallenge.repositories.EnderecoRepository;
 import br.com.fiap.techchallenge.services.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
+    private final EnderecoRepository enderecoRepository;
 
 
     @Override
@@ -32,16 +35,24 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponseDTO getById(Long id) {
-        return clienteRepository.findByIdClienteDTO(id).orElseThrow();
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        return new ClienteResponseDTO(cliente);
     }
 
     @Override
     public ClienteResponseDTO create(ClienteRequestDTO clienteRequestDTO) {
         Cliente cliente = new Cliente();
-        BeanUtils.copyProperties(clienteRequestDTO, cliente);
+        BeanUtils.copyProperties(clienteRequestDTO, cliente, "endereco");
+        if(clienteRequestDTO.getEndereco()!=null){
+            Endereco endereco = new Endereco();
+            BeanUtils.copyProperties(clienteRequestDTO.getEndereco(), endereco);
+            cliente.setEndereco(endereco);
+        }
         cliente.setDataCriacao(Instant.now());
         cliente.setDataUltimaAlteracao(Instant.now());
-        return getClienteResponseDTO(cliente);
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return getClienteResponseDTO(clienteSalvo);
     }
 
     @Override
@@ -51,9 +62,17 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setNome(clienteRequestDTO.getNome());
         cliente.setEmail(clienteRequestDTO.getEmail());
         cliente.setSenha(clienteRequestDTO.getSenha());
-        cliente.setDataUltimaAlteracao(Instant.now());
 
-        return getClienteResponseDTO(cliente);
+        if(clienteRequestDTO.getEndereco()!=null){
+            Endereco endereco = cliente.getEndereco() == null ?  new Endereco() : cliente.getEndereco();
+            BeanUtils.copyProperties(clienteRequestDTO.getEndereco(), endereco);
+            cliente.setEndereco(endereco);
+        }else{
+            cliente.setEndereco(null);
+        }
+        cliente.setDataUltimaAlteracao(Instant.now());
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return new ClienteResponseDTO(clienteSalvo);
     }
 
     @Override
