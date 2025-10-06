@@ -1,6 +1,6 @@
 -- O docker-compose já se encarrega de criar o banco de dados.
-CREATE DATABASE IF NOT EXISTS techchallenge_dev;
-USE techchallenge_dev;
+-- CREATE DATABASE IF NOT EXISTS techchallenge-dev;
+-- USE techchallenge-dev;
 
 --
 -- Tabela `endereco` (Sem alterações)
@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
+    data_criacao DATETIME,
     data_ultima_alteracao DATETIME,
     FOREIGN KEY (id_endereco) REFERENCES endereco(id)
 );
@@ -169,11 +170,11 @@ INSERT INTO endereco (rua, numero, cidade, cep, complemento) VALUES
 ('Avenida Saborosa', '550', 'São Paulo', '04538-132', 'Filial Itaim');
 
 -- 1. Inserindo dados na tabela PAI `usuario`
-INSERT INTO usuario (id, nome, email, senha, data_ultima_alteracao, id_endereco) VALUES
-(1, 'Admin Master', 'admin@techchallenge.com', 'senha_forte_admin', NOW(), 1),
-(2, 'Carlos Pereira', 'carlos.dono@email.com', 'senha_forte_dono', NOW(), 2),
-(3, 'Ana Silva', 'ana.cliente@email.com', 'senha_fraca_123', NOW(), 3),
-(4, 'Bruno Costa', 'bruno.cliente@email.com', 'senha_fraca_456', NOW(), 4);
+INSERT INTO usuario (id, nome, email, senha, data_criacao, data_ultima_alteracao, id_endereco) VALUES
+(1, 'Admin Master', 'admin@techchallenge.com', 'senha_forte_admin', NOW(), NOW(), 1),
+(2, 'Carlos Pereira', 'carlos.dono@email.com', 'senha_forte_dono', NOW(), NOW(), 2),
+(3, 'Ana Silva', 'ana.cliente@email.com', 'senha_fraca_123', NOW(), NOW(), 3),
+(4, 'Bruno Costa', 'bruno.cliente@email.com', 'senha_fraca_456', NOW(), NOW(), 4);
 
 -- 2. NOVO: Inserindo os IDs nas tabelas FILHAS para definir o tipo de cada usuário
 INSERT INTO admin (id) VALUES (1);
@@ -217,8 +218,12 @@ INSERT INTO historico (id_usuario, id_pedido, id_tipo_historico) VALUES
 -- ATUALIZAÇÃO Consulta 1: Listar Todos os Usuários e Seus Perfis
 -- Agora usamos LEFT JOINs nas tabelas filhas para descobrir o perfil de cada usuário.
 SELECT
+	u.id,
     u.nome,
     u.email,
+	u.senha,
+	u.data_criacao,
+    u.data_ultima_alteracao,
     CASE
         WHEN c.id IS NOT NULL THEN 'CLIENTE'
         WHEN dr.id IS NOT NULL THEN 'DONO_RESTAURANTE'
@@ -297,4 +302,10 @@ WHERE u_dono.nome = 'Carlos Pereira' AND th.tipo = 'VENDA'
 ORDER BY h.data DESC;
 
 -- Consulta 7: (Sem alterações)
-SELECT c.nome AS item, SUM(pi.quantidade) AS total_vendido FROM pedido_item pi JOIN cardapio c ON pi.id_cardapio = c.id JOIN restaurante r ON c.id_restaurante = r.id WHERE r.nome = 'Pizzaria do Carlos' GROUP BY c.nome ORDER BY total_vendido DESC;
+SELECT 
+	c.nome AS item, 
+	SUM(pi.quantidade) AS total_vendido 
+FROM pedido_item pi 
+JOIN cardapio c ON pi.id_cardapio = c.id 
+JOIN restaurante r ON c.id_restaurante = r.id 
+WHERE r.nome = 'Pizzaria do Carlos' GROUP BY c.nome ORDER BY total_vendido DESC;

@@ -1,9 +1,6 @@
 package br.com.fiap.techchallenge.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -13,7 +10,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

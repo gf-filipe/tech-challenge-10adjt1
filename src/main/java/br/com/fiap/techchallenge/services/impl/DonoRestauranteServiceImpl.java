@@ -1,12 +1,11 @@
 package br.com.fiap.techchallenge.services.impl;
 
-import br.com.fiap.techchallenge.controllers.dto.DonoRestauranteEmailDTO;
-import br.com.fiap.techchallenge.controllers.dto.DonoRestauranteResponseDTO;
 import br.com.fiap.techchallenge.domain.DonoRestaurante;
 import br.com.fiap.techchallenge.repositories.DonoRestauranteRepository;
 import br.com.fiap.techchallenge.services.DonoRestauranteService;
 import lombok.AllArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,29 +17,25 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
 
     @Override
     public List<DonoRestaurante> getAll() {
-        return donoRestauranteRepository.findAllComEndereco();
+        return donoRestauranteRepository.findAll();
     }
 
     @Override
     public DonoRestaurante getById(Long id) {
-        return donoRestauranteRepository.findByIdComEndereco(id).orElse(null);
+        return donoRestauranteRepository.findById(id).orElse(null);
     }
 
     @Override
     public DonoRestaurante create(DonoRestaurante donoRestaurante) {
+        donoRestaurante.setDataCriacao(Instant.now());
+        donoRestaurante.setDataUltimaAlteracao(Instant.now());
         return donoRestauranteRepository.save(donoRestaurante);
     }
 
     @Override
     public DonoRestaurante update(DonoRestaurante donoRestaurante, Long id) {
         donoRestaurante.setId(id);
-        return donoRestauranteRepository.save(donoRestaurante);
-    }
-
-    @Override
-    public DonoRestaurante updateEmail(DonoRestauranteEmailDTO donoRestauranteEmailDTO, Long id) {
-        DonoRestaurante donoRestaurante = donoRestauranteRepository.findByIdComEndereco(id).orElseThrow();
-        donoRestaurante.setEmail(donoRestauranteEmailDTO.email());
+        donoRestaurante.setDataUltimaAlteracao(Instant.now());
         return donoRestauranteRepository.save(donoRestaurante);
     }
 

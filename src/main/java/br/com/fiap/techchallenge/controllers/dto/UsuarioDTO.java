@@ -5,9 +5,7 @@ import br.com.fiap.techchallenge.domain.Cliente;
 import br.com.fiap.techchallenge.domain.DonoRestaurante;
 import br.com.fiap.techchallenge.domain.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 

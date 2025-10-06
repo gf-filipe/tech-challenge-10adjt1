@@ -2,7 +2,6 @@ package br.com.fiap.techchallenge.controllers.dto;
 
 import br.com.fiap.techchallenge.domain.Cliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

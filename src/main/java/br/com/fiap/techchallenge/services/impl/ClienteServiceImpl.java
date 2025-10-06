@@ -6,7 +6,6 @@ import br.com.fiap.techchallenge.controllers.dto.ClienteEmailDTO;
 import br.com.fiap.techchallenge.domain.Cliente;
 import br.com.fiap.techchallenge.domain.Endereco;
 import br.com.fiap.techchallenge.repositories.ClienteRepository;
-import br.com.fiap.techchallenge.repositories.EnderecoRepository;
 import br.com.fiap.techchallenge.services.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -22,8 +21,6 @@ import java.util.stream.Collectors;
 @Service
 public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
-    private final EnderecoRepository enderecoRepository;
-
 
     @Override
     public List<ClienteResponseDTO> getAll() {
