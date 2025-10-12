@@ -4,7 +4,6 @@ import br.com.fiap.techchallenge.controllers.dto.*;
 import br.com.fiap.techchallenge.controllers.dto.AdminResponseDTO;
 import br.com.fiap.techchallenge.domain.*;
 import br.com.fiap.techchallenge.domain.Admin;
-import br.com.fiap.techchallenge.domain.Admin;
 import br.com.fiap.techchallenge.repositories.AdminRepository;
 import br.com.fiap.techchallenge.services.AdminService;
 import lombok.AllArgsConstructor;
