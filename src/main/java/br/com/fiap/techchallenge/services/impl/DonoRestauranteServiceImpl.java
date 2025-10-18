@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.services.impl;
 
 import br.com.fiap.techchallenge.domain.DonoRestaurante;
+import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.DonoRestauranteRepository;
 import br.com.fiap.techchallenge.services.DonoRestauranteService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
 
     @Override
     public DonoRestaurante getById(Long id) {
-        return donoRestauranteRepository.findById(id).orElse(null);
+        return donoRestauranteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
     }
 
     @Override
@@ -34,6 +35,7 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
 
     @Override
     public DonoRestaurante update(DonoRestaurante donoRestaurante, Long id) {
+        donoRestauranteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
         donoRestaurante.setId(id);
         donoRestaurante.setDataUltimaAlteracao(Instant.now());
         return donoRestauranteRepository.save(donoRestaurante);
@@ -41,6 +43,7 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
 
     @Override
     public void delete(Long id) {
+        donoRestauranteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
         donoRestauranteRepository.deleteById(id);
     }
 }
