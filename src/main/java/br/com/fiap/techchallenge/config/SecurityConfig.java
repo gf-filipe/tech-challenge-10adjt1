@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,8 +28,11 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/auth/login").permitAll();
-                    req.requestMatchers("/usuarios/{id}/senha").permitAll();
                     req.requestMatchers("/auth/gerar-hash").permitAll();
+
+                    req.requestMatchers(HttpMethod.POST,"/cliente").permitAll();
+                    req.requestMatchers(HttpMethod.POST,"/dono-restaurante").permitAll();
+                    req.requestMatchers(HttpMethod.POST,"/admin").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
