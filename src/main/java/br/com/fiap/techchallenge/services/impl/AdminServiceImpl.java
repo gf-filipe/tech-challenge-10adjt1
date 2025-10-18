@@ -4,13 +4,12 @@ import br.com.fiap.techchallenge.controllers.dto.*;
 import br.com.fiap.techchallenge.controllers.dto.AdminResponseDTO;
 import br.com.fiap.techchallenge.domain.*;
 import br.com.fiap.techchallenge.domain.Admin;
+import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.AdminRepository;
 import br.com.fiap.techchallenge.services.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -31,8 +30,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminResponseDTO getById(Long id) {
-        Admin admin = AdminRepository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin não encontrado"));
+        Admin admin = AdminRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Admin não encontrado"));
         return new AdminResponseDTO(admin);
     }
 
@@ -53,8 +51,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminResponseDTO update(AdminRequestDTO adminRequestDTO, Long id) {
-        Admin admin = AdminRepository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "admin não encontrado"));
+        Admin admin = AdminRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Admin não encontrado"));
         admin.setNome(adminRequestDTO.getNome());
         admin.setEmail(adminRequestDTO.getEmail());
         admin.setSenha(adminRequestDTO.getSenha());
@@ -73,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void delete(Long id) {
+        AdminRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Admin não encontrado"));
         AdminRepository.deleteById(id);
     }
 

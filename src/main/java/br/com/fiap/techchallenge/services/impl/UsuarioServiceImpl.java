@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.services.impl;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioDTO;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioPasswordDTO;
 import br.com.fiap.techchallenge.domain.Usuario;
+import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.UsuarioRepository;
 import br.com.fiap.techchallenge.services.UsuarioService;
 import lombok.AllArgsConstructor;
@@ -22,10 +23,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void updateSenha(Long id, UsuarioPasswordDTO usuarioPasswordDTO) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+                new UserNotFoundException("Usuário não encontrado"));
+
         if(usuario.getSenha().equals(usuarioPasswordDTO.getSenha())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A nova senha não pode ser igual à senha antiga.");
-        }else{
+
+        } else {
             usuario.setSenha(usuarioPasswordDTO.getSenha());
             usuario.setDataUltimaAlteracao(Instant.now());
             usuarioRepository.save(usuario);
@@ -43,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioDTO getById(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+                ()-> new UserNotFoundException("Usuário não encontrado"));
         return new UsuarioDTO(usuario);
     }
 
@@ -51,7 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTO getByNome(String nome) {
         Usuario usuario = usuarioRepository.findByNome(nome);
         if(usuario == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "usuário não encontrado.");
+            throw new UserNotFoundException("Usuário não encontrado.");
         }
         return new UsuarioDTO(usuario);
     }

@@ -5,6 +5,7 @@ import br.com.fiap.techchallenge.controllers.dto.ClienteRequestDTO;
 import br.com.fiap.techchallenge.controllers.dto.ClienteResponseDTO;
 import br.com.fiap.techchallenge.domain.Cliente;
 import br.com.fiap.techchallenge.domain.Endereco;
+import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.ClienteRepository;
 import br.com.fiap.techchallenge.services.ClienteService;
 import lombok.AllArgsConstructor;
@@ -33,8 +34,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponseDTO getById(Long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Cliente não encontrado"));
         return new ClienteResponseDTO(cliente);
     }
 
@@ -58,8 +58,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponseDTO update(ClienteRequestDTO clienteRequestDTO, Long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Cliente não encontrado"));
 
         cliente.setNome(clienteRequestDTO.getNome());
         cliente.setEmail(clienteRequestDTO.getEmail());
@@ -83,14 +82,14 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente updateEmail(ClienteEmailDTO clienteEmailDTO, Long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow();
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Cliente não encontrado"));
         BeanUtils.copyProperties(clienteEmailDTO, cliente);
         return clienteRepository.save(cliente);
     }
 
     @Override
     public void delete(Long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow();
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Cliente não encontrado"));
         clienteRepository.delete(cliente);
     }
 }
