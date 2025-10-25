@@ -2,6 +2,8 @@ package br.com.fiap.techchallenge.services;
 
 import java.util.List;
 
+import br.com.fiap.techchallenge.controllers.dto.DonoRestauranteRequestDTO;
+import br.com.fiap.techchallenge.controllers.dto.DonoRestauranteResponseDTO;
 import br.com.fiap.techchallenge.domain.DonoRestaurante;
 
 public interface DonoRestauranteService {
@@ -9,9 +11,9 @@ public interface DonoRestauranteService {
 
     DonoRestaurante getById(Long id);
 
-    DonoRestaurante create(DonoRestaurante donoRestaurante);
+    DonoRestaurante create(DonoRestauranteRequestDTO donoRestaurante);
 
-    DonoRestaurante update(DonoRestaurante donoRestaurante, Long id);
+    DonoRestaurante update(DonoRestauranteRequestDTO donoRestaurante, Long id);
 
     void delete(Long id);
 }

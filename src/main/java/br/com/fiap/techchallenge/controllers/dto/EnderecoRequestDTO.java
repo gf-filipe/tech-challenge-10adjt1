@@ -1,13 +1,16 @@
 package br.com.fiap.techchallenge.controllers.dto;
 
 import br.com.fiap.techchallenge.domain.Endereco;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class EnderecoDTO {
+public class EnderecoRequestDTO {
     private Long id;
     private String rua;
     private String numero;
@@ -16,6 +19,6 @@ public class EnderecoDTO {
     private String complemento;
 
 
-    public EnderecoDTO(Endereco endereco) {
+    public EnderecoRequestDTO(Endereco endereco) {
     }
 }

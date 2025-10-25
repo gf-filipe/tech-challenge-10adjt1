@@ -45,7 +45,7 @@ public class DonoRestauranteController {
 
     @PostMapping
     public ResponseEntity<DonoRestauranteResponseDTO> createDonoRestaurante(@RequestBody DonoRestauranteRequestDTO donoRestauranteRequestDTO) {
-        DonoRestaurante createdDonoRestaurante = donoRestauranteService.create(donoRestauranteRequestDTO.toDomain());
+        DonoRestaurante createdDonoRestaurante = donoRestauranteService.create(donoRestauranteRequestDTO);
 
         URI location = URI.create(String.format("/v1/dono-restaurante/%s", createdDonoRestaurante.getId()));
         DonoRestauranteResponseDTO responseDTO = DonoRestauranteResponseDTO.fromDomain(createdDonoRestaurante);
@@ -55,7 +55,7 @@ public class DonoRestauranteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<DonoRestauranteResponseDTO> updateDonoRestaurante(@PathVariable Long id, @RequestBody DonoRestauranteRequestDTO donoRestauranteRequestDTO) {
-        DonoRestaurante updatedDonoRestaurante = donoRestauranteService.update(donoRestauranteRequestDTO.toDomain(), id);
+        DonoRestaurante updatedDonoRestaurante = donoRestauranteService.update(donoRestauranteRequestDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(DonoRestauranteResponseDTO.fromDomain(updatedDonoRestaurante));
     }
 

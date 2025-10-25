@@ -15,9 +15,9 @@ public class DonoRestaurante extends Usuario {
     public DonoRestaurante(String nome, String email, String senha) {
         super(nome, email, senha);
     }
-    public DonoRestaurante(String nome, String email, String senha, Endereco endereco) {
-        super(nome, email, senha, endereco);
-    }
     @OneToMany(mappedBy = "donoRestaurante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Restaurante> restaurantes;
+
+    public DonoRestaurante(DonoRestaurante donoRestauranteSalvo) {
+    }
 }

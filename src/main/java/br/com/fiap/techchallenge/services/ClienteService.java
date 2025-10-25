@@ -17,7 +17,5 @@ public interface ClienteService {
 
     ClienteResponseDTO update(ClienteRequestDTO clienteRequestDTO, Long id);
 
-    Cliente updateEmail(ClienteEmailDTO clienteEmailDTO, Long id);
-
     void delete(Long id);
 }
