@@ -1,14 +1,18 @@
 package br.com.fiap.techchallenge.controllers.dto;
 
-import br.com.fiap.techchallenge.domain.DonoRestaurante;
-import br.com.fiap.techchallenge.domain.Endereco;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
+@Schema(description = "DTO para requisição de criação/atualização de dono de restaurante")
 public record DonoRestauranteRequestDTO(
-    String nome, 
-    String email, 
-    String senha,
-    EnderecoRequestDTO endereco
-    ) {
+        @Schema(description = "Nome do dono do restaurante", example = "João da Silva") @NotBlank(message = "Nome é obrigatório") String nome,
 
+        @Schema(description = "Email do dono do restaurante", example = "joao.silva@email.com") @NotBlank(message = "Email é obrigatório") @Email(message = "Email inválido") String email,
+
+        @Schema(description = "Senha do dono do restaurante", example = "senha123") @NotBlank(message = "Senha é obrigatória") String senha,
+
+        @Schema(description = "Endereço do dono do restaurante") @Valid EnderecoRequestDTO endereco) {
 
 }

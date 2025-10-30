@@ -4,8 +4,8 @@ FROM openjdk:21-jdk-slim
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia o arquivo JAR da sua aplicação para o container. 
-# "target/*.jar" assume que você está usando Maven e o arquivo JAR 
+# Copia o arquivo JAR da sua aplicação para o container.
+# "target/*.jar" assume que você está usando Maven e o arquivo JAR
 # compilado está na pasta target.
 COPY target/*.jar app.jar
 

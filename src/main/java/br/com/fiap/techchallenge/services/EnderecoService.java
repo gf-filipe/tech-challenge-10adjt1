@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.services;
 
-import br.com.fiap.techchallenge.controllers.dto.EnderecoDTO;
 import br.com.fiap.techchallenge.controllers.dto.EnderecoRequestDTO;
 import br.com.fiap.techchallenge.controllers.dto.EnderecoResponseDTO;
 

@@ -10,23 +10,23 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/techchallenge
       SPRING_DATASOURCE_USERNAME: usuario_teste
-      SPRING_DATASOURCE_PASSWORD: 12345
+      SPRING_DATASOURCE_PASSWORD: password123
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
   #Serviço do banco de dados
   db:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: mysql_db_prod
     environment:
       MYSQL_DATABASE: techchallenge
       MYSQL_USER: usuario_teste
-      MYSQL_PASSWORD: 12345
+      MYSQL_PASSWORD: password123
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - "3307:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data_prod:/var/lib/mysql
       - ./initdb.d:/docker-entrypoint-initdb.d
 
 volumes:
-  db_data:
+  db_data_prod:

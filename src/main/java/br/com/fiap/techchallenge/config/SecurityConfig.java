@@ -30,9 +30,20 @@ public class SecurityConfig {
                     req.requestMatchers("/auth/login").permitAll();
                     req.requestMatchers("/auth/gerar-hash").permitAll();
 
-                    req.requestMatchers(HttpMethod.POST,"/cliente").permitAll();
-                    req.requestMatchers(HttpMethod.POST,"/dono-restaurante").permitAll();
-                    req.requestMatchers(HttpMethod.POST,"/admin").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/cliente").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/dono-restaurante").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/admin").permitAll();
+
+                    req.requestMatchers(
+                            "/v3/api-docs",
+                            "/v3/api-docs/**",
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/api/v1/v3/api-docs",
+                            "/api/v1/v3/api-docs/**",
+                            "/api/v1/swagger-ui.html",
+                            "/api/v1/swagger-ui/**").permitAll();
+
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
