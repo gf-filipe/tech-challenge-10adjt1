@@ -169,12 +169,12 @@ INSERT INTO endereco (rua, numero, cidade, cep, complemento) VALUES
 ('Rua Principal da Pizza', '1000', 'São Paulo', '05425-070', 'Loja 1'),
 ('Avenida Saborosa', '550', 'São Paulo', '04538-132', 'Filial Itaim');
 
--- 1. Inserindo dados na tabela PAI `usuario`
+-- 1. Inserindo dados na tabela PAI `usuario`, a senha é 123456 e está criptografada
 INSERT INTO usuario (id, nome, email, senha, data_criacao, data_ultima_alteracao, id_endereco) VALUES
-(1, 'Admin Master', 'admin@techchallenge.com', 'senha_forte_admin', NOW(), NOW(), 1),
-(2, 'Carlos Pereira', 'carlos.dono@email.com', 'senha_forte_dono', NOW(), NOW(), 2),
-(3, 'Ana Silva', 'ana.cliente@email.com', 'senha_fraca_123', NOW(), NOW(), 3),
-(4, 'Bruno Costa', 'bruno.cliente@email.com', 'senha_fraca_456', NOW(), NOW(), 4);
+(1, 'Admin Master', 'admin@techchallenge.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 1),
+(2, 'Carlos Pereira', 'carlos.dono@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 2),
+(3, 'Ana Silva', 'ana.cliente@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 3),
+(4, 'Bruno Costa', 'bruno.cliente@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 4);
 
 -- 2. NOVO: Inserindo os IDs nas tabelas FILHAS para definir o tipo de cada usuário
 INSERT INTO admin (id) VALUES (1);

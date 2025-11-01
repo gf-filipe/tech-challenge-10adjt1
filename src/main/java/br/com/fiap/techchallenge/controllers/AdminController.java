@@ -18,7 +18,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/v1/admin")
 @Tag(name = "Admin", description = "Operações administrativas")
 public class AdminController {
     private final AdminService AdminService;

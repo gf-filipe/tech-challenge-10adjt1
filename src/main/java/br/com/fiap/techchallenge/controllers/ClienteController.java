@@ -22,7 +22,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/v1/cliente")
 @Tag(name = "Clientes", description = "Endpoints para gerenciamento de clientes")
 @SecurityRequirement(name = "bearerAuth")
 public class ClienteController {

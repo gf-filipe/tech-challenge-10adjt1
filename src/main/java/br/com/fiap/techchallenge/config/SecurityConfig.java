@@ -30,9 +30,9 @@ public class SecurityConfig {
                     req.requestMatchers("/auth/login").permitAll();
                     req.requestMatchers("/auth/gerar-hash").permitAll();
 
-                    req.requestMatchers(HttpMethod.POST, "/cliente").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/dono-restaurante").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/admin").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "v1/cliente").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "v1/dono-restaurante").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "v1/admin").permitAll();
 
                     req.requestMatchers(
                             "/v3/api-docs",

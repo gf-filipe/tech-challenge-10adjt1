@@ -18,7 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/v1/endereco")
 @Tag(name = "Endereço", description = "Operações de CRUD para endereços")
 public class EnderecoController {
     private final EnderecoService enderecoService;

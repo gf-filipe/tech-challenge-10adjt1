@@ -18,7 +18,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/v1/usuario")
 @Tag(name = "Usuário", description = "Operações de CRUD para usuários")
 public class UsuarioController {
     private final UsuarioService usuarioService;

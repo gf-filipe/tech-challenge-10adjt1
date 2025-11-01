@@ -30,7 +30,7 @@ import br.com.fiap.techchallenge.domain.DonoRestaurante;
 import br.com.fiap.techchallenge.services.DonoRestauranteService;
 
 @RestController
-@RequestMapping("/dono-restaurante")
+@RequestMapping("/v1/dono-restaurante")
 @Tag(name = "Donos de Restaurante", description = "Endpoints para gerenciamento de donos de restaurante")
 @SecurityRequirement(name = "bearerAuth")
 public class DonoRestauranteController {
