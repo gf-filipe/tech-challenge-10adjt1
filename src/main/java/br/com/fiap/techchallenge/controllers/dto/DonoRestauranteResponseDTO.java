@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.fiap.techchallenge.domain.DonoRestaurante;
 
 public record DonoRestauranteResponseDTO(
-    Long id, 
     String nome, 
     String email, 
     EnderecoDTO endereco, 
@@ -30,7 +29,6 @@ public record DonoRestauranteResponseDTO(
         }
         
         return new DonoRestauranteResponseDTO(
-            donoRestaurante.getId(),
             donoRestaurante.getNome(),
             donoRestaurante.getEmail(),
             enderecoDTO,

@@ -15,7 +15,6 @@ import java.time.Instant;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class AdminResponseDTO {
-    private Long id;
     private String nome;
     private String email;
 
@@ -26,7 +25,6 @@ public class AdminResponseDTO {
     private EnderecoDTO endereco;
 
     public AdminResponseDTO(Admin Admin) {
-        this.id = Admin.getId();
         this.nome = Admin.getNome();
         this.email = Admin.getEmail();
         this.dataCriacao = Admin.getDataCriacao();

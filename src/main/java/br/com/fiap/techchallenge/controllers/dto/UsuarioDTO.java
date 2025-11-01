@@ -14,7 +14,6 @@ import java.time.Instant;
 @Getter
 @Setter
 public class UsuarioDTO {
-    private Long id;
     private String nome;
     private String email;
     private String tipo;
@@ -25,7 +24,6 @@ public class UsuarioDTO {
     private EnderecoDTO endereco;
 
     public UsuarioDTO(Usuario usuario) {
-        this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.dataCriacao = usuario.getDataCriacao();

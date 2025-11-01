@@ -20,9 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Schema(description = "DTO para resposta de cliente")
 public class ClienteResponseDTO {
-    @Schema(description = "ID do cliente", example = "1")
-    private Long id;
-
     @Schema(description = "Nome do cliente", example = "João Silva")
     private String nome;
 
@@ -44,7 +41,6 @@ public class ClienteResponseDTO {
     private List<PedidoResponseDTO> pedidos;
 
     public ClienteResponseDTO(Cliente cliente) {
-        this.id = cliente.getId();
         this.nome = cliente.getNome();
         this.email = cliente.getEmail();
         this.dataCriacao = cliente.getDataCriacao();
