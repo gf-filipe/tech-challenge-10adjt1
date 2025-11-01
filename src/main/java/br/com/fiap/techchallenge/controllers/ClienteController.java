@@ -73,7 +73,7 @@ public class ClienteController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> updateCliente(
-            @RequestBody ClienteRequestDTO clienteRequestDTO,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do cliente", required = true, content = @Content(schema = @Schema(implementation = ClienteRequestDTO.class))) @RequestBody ClienteRequestDTO clienteRequestDTO,
             @Parameter(description = "ID do cliente", required = true) @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.update(clienteRequestDTO, id));
     }
