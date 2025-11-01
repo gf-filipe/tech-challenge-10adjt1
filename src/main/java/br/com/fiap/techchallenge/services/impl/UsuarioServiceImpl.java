@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.services.impl;
 
 import br.com.fiap.techchallenge.controllers.dto.UsuarioDTO;
+import br.com.fiap.techchallenge.controllers.dto.UsuarioNomeDTO;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioPasswordDTO;
 import br.com.fiap.techchallenge.domain.Usuario;
 import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
@@ -51,11 +52,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDTO getByNome(String nome) {
-        Usuario usuario = usuarioRepository.findByNome(nome);
-        if(usuario == null){
-            throw new UserNotFoundException("Usuário não encontrado.");
-        }
-        return new UsuarioDTO(usuario);
+    public List<UsuarioDTO> getByNome(UsuarioNomeDTO usuario) {
+        List<Usuario> usuarios = usuarioRepository.findByNome(usuario.getNome());
+
+        return usuarios.stream()
+                .map(UsuarioDTO::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.controllers;
 
 import br.com.fiap.techchallenge.controllers.dto.UsuarioDTO;
+import br.com.fiap.techchallenge.controllers.dto.UsuarioNomeDTO;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioPasswordDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,13 +42,15 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getById(id));
     }
 
-    @GetMapping("/busca-nome/{nome}")
+    @GetMapping("/busca-nome")
     @Operation(summary = "Buscar usuário por nome")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuário encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioDTO.class)))
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UsuarioDTO.class)))
     })
-    public ResponseEntity<UsuarioDTO> getByNome(@PathVariable String nome) {
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getByNome(nome));
+    public ResponseEntity<List<UsuarioDTO>> getByNome(@RequestBody UsuarioNomeDTO usuario) {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getByNome(usuario));
     }
 
     @PatchMapping("/{id}")

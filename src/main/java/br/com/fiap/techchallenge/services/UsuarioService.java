@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.services;
 
 import br.com.fiap.techchallenge.controllers.dto.UsuarioDTO;
+import br.com.fiap.techchallenge.controllers.dto.UsuarioNomeDTO;
 import br.com.fiap.techchallenge.controllers.dto.UsuarioPasswordDTO;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface UsuarioService {
 
     UsuarioDTO getById(Long id);
 
-    UsuarioDTO getByNome(String nome);
+    List<UsuarioDTO> getByNome(UsuarioNomeDTO usuario);
 }

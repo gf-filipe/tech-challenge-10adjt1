@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UsuarioPasswordDTO {
-    private String senha;
+public class UsuarioNomeDTO {
+    private String nome;
 }

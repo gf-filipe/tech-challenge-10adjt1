@@ -27,8 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers("/auth/login").permitAll();
-                    req.requestMatchers("/auth/gerar-hash").permitAll();
+                    req.requestMatchers("/auth/v1/login").permitAll();
 
                     req.requestMatchers(HttpMethod.POST, "v1/cliente").permitAll();
                     req.requestMatchers(HttpMethod.POST, "v1/dono-restaurante").permitAll();
