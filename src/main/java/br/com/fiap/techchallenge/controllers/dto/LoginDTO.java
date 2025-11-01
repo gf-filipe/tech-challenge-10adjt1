@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Schema(description = "DTO para realizar login")
 public record LoginDTO(
-        @Schema(description = "Email do usuário", example = "usuario@email.com") @NotBlank(message = "Email é obrigatório") @Email(message = "Formato de email inválido") String email,
+        @Schema(description = "Email do usuário", example = "admin@techchallenge.com") @NotBlank(message = "Email é obrigatório") @Email(message = "Formato de email inválido") String email,
 
-        @Schema(description = "Senha do usuário", example = "senha123") @NotBlank(message = "Senha é obrigatória") String senha) {
+        @Schema(description = "Senha do usuário", example = "123456") @NotBlank(message = "Senha é obrigatória") String senha) {
 }
