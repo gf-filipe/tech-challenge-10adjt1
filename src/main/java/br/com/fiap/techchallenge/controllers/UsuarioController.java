@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import br.com.fiap.techchallenge.services.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,7 +64,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "403", description = "Proibido", content = @Content)
     })
     public ResponseEntity<List<UsuarioDTO>> getByNome(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados contendo o nome do usuário para busca", required = true, content = @Content(schema = @Schema(implementation = UsuarioNomeDTO.class))) @RequestBody UsuarioNomeDTO usuario) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados contendo o nome do usuário para busca", required = true, content = @Content(schema = @Schema(implementation = UsuarioNomeDTO.class))) @Valid @RequestBody UsuarioNomeDTO usuario) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getByNome(usuario));
     }
 
@@ -78,7 +79,7 @@ public class UsuarioController {
     })
     public ResponseEntity<String> updateSenha(
             @Parameter(description = "ID do usuário", required = true) @PathVariable Long id,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Nova senha do usuário", required = true, content = @Content(schema = @Schema(implementation = UsuarioPasswordDTO.class))) @RequestBody UsuarioPasswordDTO usuarioPasswordDTO) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Nova senha do usuário", required = true, content = @Content(schema = @Schema(implementation = UsuarioPasswordDTO.class))) @Valid @RequestBody UsuarioPasswordDTO usuarioPasswordDTO) {
         usuarioService.updateSenha(id, usuarioPasswordDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Senha alterada com sucesso");
     }

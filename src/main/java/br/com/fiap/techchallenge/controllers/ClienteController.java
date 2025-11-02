@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -59,7 +60,7 @@ public class ClienteController {
     })
     @PostMapping
     public ResponseEntity<ClienteResponseDTO> createCliente(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do cliente", required = true, content = @Content(schema = @Schema(implementation = ClienteRequestDTO.class))) @RequestBody ClienteRequestDTO clienteRequestDTO) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do cliente", required = true, content = @Content(schema = @Schema(implementation = ClienteRequestDTO.class))) @Valid @RequestBody ClienteRequestDTO clienteRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(clienteRequestDTO));
     }
 
@@ -73,7 +74,7 @@ public class ClienteController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> updateCliente(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do cliente", required = true, content = @Content(schema = @Schema(implementation = ClienteRequestDTO.class))) @RequestBody ClienteRequestDTO clienteRequestDTO,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do cliente", required = true, content = @Content(schema = @Schema(implementation = ClienteRequestDTO.class))) @Valid @RequestBody ClienteRequestDTO clienteRequestDTO,
             @Parameter(description = "ID do cliente", required = true) @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.update(clienteRequestDTO, id));
     }

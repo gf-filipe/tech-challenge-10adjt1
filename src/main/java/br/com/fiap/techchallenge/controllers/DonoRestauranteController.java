@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +77,7 @@ public class DonoRestauranteController {
     })
     @PostMapping
     public ResponseEntity<DonoRestauranteResponseDTO> createDonoRestaurante(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do dono de restaurante", required = true, content = @Content(schema = @Schema(implementation = DonoRestauranteRequestDTO.class))) @RequestBody DonoRestauranteRequestDTO donoRestauranteRequestDTO) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do dono de restaurante", required = true, content = @Content(schema = @Schema(implementation = DonoRestauranteRequestDTO.class))) @Valid @RequestBody DonoRestauranteRequestDTO donoRestauranteRequestDTO) {
         DonoRestaurante createdDonoRestaurante = donoRestauranteService.create(donoRestauranteRequestDTO);
 
         URI location = URI.create(String.format("/v1/dono-restaurante/%s", createdDonoRestaurante.getId()));
@@ -96,7 +97,7 @@ public class DonoRestauranteController {
     @PutMapping("/{id}")
     public ResponseEntity<DonoRestauranteResponseDTO> updateDonoRestaurante(
             @Parameter(description = "ID do dono de restaurante", required = true) @PathVariable Long id,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do dono de restaurante", required = true, content = @Content(schema = @Schema(implementation = DonoRestauranteRequestDTO.class))) @RequestBody DonoRestauranteRequestDTO donoRestauranteRequestDTO) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do dono de restaurante", required = true, content = @Content(schema = @Schema(implementation = DonoRestauranteRequestDTO.class))) @Valid @RequestBody DonoRestauranteRequestDTO donoRestauranteRequestDTO) {
         DonoRestaurante updatedDonoRestaurante = donoRestauranteService.update(donoRestauranteRequestDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(DonoRestauranteResponseDTO.fromDomain(updatedDonoRestaurante));
     }

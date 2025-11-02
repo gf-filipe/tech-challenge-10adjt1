@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import br.com.fiap.techchallenge.services.AdminService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -59,7 +60,7 @@ public class AdminController {
     })
     @PostMapping
     public ResponseEntity<AdminResponseDTO> createadmin(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do administrador", required = true, content = @Content(schema = @Schema(implementation = AdminRequestDTO.class))) @RequestBody AdminRequestDTO adminRequestDTO) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do administrador", required = true, content = @Content(schema = @Schema(implementation = AdminRequestDTO.class))) @Valid @RequestBody AdminRequestDTO adminRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(AdminService.create(adminRequestDTO));
     }
 
@@ -73,7 +74,7 @@ public class AdminController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<AdminResponseDTO> updateadmin(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do administrador", required = true, content = @Content(schema = @Schema(implementation = AdminRequestDTO.class))) @RequestBody AdminRequestDTO adminRequestDTO,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do administrador", required = true, content = @Content(schema = @Schema(implementation = AdminRequestDTO.class))) @Valid @RequestBody AdminRequestDTO adminRequestDTO,
             @Parameter(description = "ID do administrador", required = true) @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(AdminService.update(adminRequestDTO, id));
     }
