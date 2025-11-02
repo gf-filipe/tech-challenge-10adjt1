@@ -12,6 +12,9 @@ import lombok.*;
 @RequiredArgsConstructor
 @Schema(description = "DTO para endereço")
 public class EnderecoDTO {
+    @Schema(description = "ID do endereço", example = "1")
+    private Long id;
+
     @Schema(description = "Nome da rua", example = "Rua dos Admins", required = true)
     @NotBlank(message = "Rua é obrigatória")
     private String rua;
@@ -33,5 +36,11 @@ public class EnderecoDTO {
     private String complemento;
 
     public EnderecoDTO(Endereco endereco) {
+        this.id = endereco.getId();
+        this.rua = endereco.getRua();
+        this.numero = endereco.getNumero();
+        this.cidade = endereco.getCidade();
+        this.cep = endereco.getCep();
+        this.complemento = endereco.getComplemento();
     }
 }

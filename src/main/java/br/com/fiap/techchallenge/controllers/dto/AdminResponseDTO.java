@@ -17,6 +17,9 @@ import java.time.Instant;
 @RequiredArgsConstructor
 @Schema(description = "DTO para resposta de administrador")
 public class AdminResponseDTO {
+    @Schema(description = "ID do administrador", example = "1")
+    private Long id;
+
     @Schema(description = "Nome do administrador", example = "Maria Souza")
     private String nome;
 
@@ -35,6 +38,7 @@ public class AdminResponseDTO {
     private EnderecoDTO endereco;
 
     public AdminResponseDTO(Admin Admin) {
+        this.id = Admin.getId();
         this.nome = Admin.getNome();
         this.email = Admin.getEmail();
         this.dataCriacao = Admin.getDataCriacao();

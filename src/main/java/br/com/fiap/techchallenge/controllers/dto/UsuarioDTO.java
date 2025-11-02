@@ -16,6 +16,9 @@ import java.time.Instant;
 @Setter
 @Schema(description = "DTO para resposta de usuário")
 public class UsuarioDTO {
+    @Schema(description = "ID do usuário", example = "1")
+    private Long id;
+
     @Schema(description = "Nome do usuário", example = "João Silva")
     private String nome;
 
@@ -37,6 +40,7 @@ public class UsuarioDTO {
     private EnderecoDTO endereco;
 
     public UsuarioDTO(Usuario usuario) {
+        this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.dataCriacao = usuario.getDataCriacao();

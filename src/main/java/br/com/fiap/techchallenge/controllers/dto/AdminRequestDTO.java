@@ -25,8 +25,7 @@ public class AdminRequestDTO {
     @Email(message = "Email inválido")
     private String email;
 
-    @Schema(description = "Senha do administrador", example = "123456", required = true)
-    @NotBlank(message = "Senha é obrigatória")
+    @Schema(description = "Senha do administrador (obrigatória apenas na criação)", example = "123456")
     private String senha;
 
     @Schema(description = "Endereço do administrador")

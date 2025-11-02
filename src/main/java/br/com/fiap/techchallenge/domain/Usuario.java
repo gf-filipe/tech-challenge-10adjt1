@@ -50,7 +50,7 @@ public abstract class Usuario implements Serializable{
     private Instant dataUltimaAlteracao;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 

@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 
 @Schema(description = "DTO para resposta de dono de restaurante")
 public record DonoRestauranteResponseDTO(
+    @Schema(description = "ID do dono do restaurante", example = "1")
+    Long id,
+    
     @Schema(description = "Nome do dono do restaurante", example = "João da Silva")
     String nome, 
     
@@ -43,6 +46,7 @@ public record DonoRestauranteResponseDTO(
         }
         
         return new DonoRestauranteResponseDTO(
+            donoRestaurante.getId(),
             donoRestaurante.getNome(),
             donoRestaurante.getEmail(),
             enderecoDTO,

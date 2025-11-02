@@ -11,7 +11,7 @@ public record DonoRestauranteRequestDTO(
 
         @Schema(description = "Email do dono do restaurante", example = "carlos.dono@email.com") @NotBlank(message = "Email é obrigatório") @Email(message = "Email inválido") String email,
 
-        @Schema(description = "Senha do dono do restaurante", example = "123456") @NotBlank(message = "Senha é obrigatória") String senha,
+        @Schema(description = "Senha do dono do restaurante (obrigatória apenas na criação)", example = "123456") String senha,
 
         @Schema(description = "Endereço do dono do restaurante") @Valid EnderecoRequestDTO endereco) {
 

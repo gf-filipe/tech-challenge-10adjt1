@@ -5,8 +5,10 @@ import br.com.fiap.techchallenge.controllers.dto.AdminResponseDTO;
 import br.com.fiap.techchallenge.controllers.dto.EnderecoRequestDTO;
 import br.com.fiap.techchallenge.domain.Admin;
 import br.com.fiap.techchallenge.domain.Endereco;
+import br.com.fiap.techchallenge.exceptions.DuplicateEmailException;
 import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.AdminRepository;
+import br.com.fiap.techchallenge.repositories.UsuarioRepository;
 import br.com.fiap.techchallenge.services.AdminService;
 import br.com.fiap.techchallenge.services.EnderecoService;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
+    private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final EnderecoService enderecoService;
 
@@ -44,6 +47,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public AdminResponseDTO create(AdminRequestDTO adminRequestDTO) {
+        if (usuarioRepository.findByEmail(adminRequestDTO.getEmail()).isPresent()) {
+            throw new DuplicateEmailException(adminRequestDTO.getEmail());
+        }
+        
+        if (adminRequestDTO.getSenha() == null || adminRequestDTO.getSenha().isEmpty()) {
+            throw new IllegalArgumentException("Senha é obrigatória na criação de administrador");
+        }
+        
         Admin admin = new Admin();
         BeanUtils.copyProperties(adminRequestDTO, admin, "endereco");
 
@@ -67,6 +78,13 @@ public class AdminServiceImpl implements AdminService {
     public AdminResponseDTO update(AdminRequestDTO adminRequestDTO, Long id) {
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Admin com ID " + id + " não encontrado para atualização."));
+        
+        usuarioRepository.findByEmail(adminRequestDTO.getEmail()).ifPresent(usuario -> {
+            if (!usuario.getId().equals(id)) {
+                throw new DuplicateEmailException(adminRequestDTO.getEmail());
+            }
+        });
+        
         admin.setNome(adminRequestDTO.getNome());
         admin.setEmail(adminRequestDTO.getEmail());
 
@@ -75,9 +93,13 @@ public class AdminServiceImpl implements AdminService {
         }
 
         if (adminRequestDTO.getEndereco() != null) {
-            Endereco endereco = admin.getEndereco() == null ? new Endereco() : admin.getEndereco();
-            BeanUtils.copyProperties(adminRequestDTO.getEndereco(), endereco);
-            admin.setEndereco(endereco);
+            if (admin.getEndereco() == null) {
+                Endereco endereco = new Endereco();
+                BeanUtils.copyProperties(adminRequestDTO.getEndereco(), endereco);
+                admin.setEndereco(endereco);
+            } else {
+                BeanUtils.copyProperties(adminRequestDTO.getEndereco(), admin.getEndereco(), "id");
+            }
         } else {
             admin.setEndereco(null);
         }

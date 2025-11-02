@@ -4,8 +4,10 @@ import br.com.fiap.techchallenge.controllers.dto.DonoRestauranteRequestDTO;
 import br.com.fiap.techchallenge.controllers.dto.EnderecoRequestDTO;
 import br.com.fiap.techchallenge.domain.DonoRestaurante;
 import br.com.fiap.techchallenge.domain.Endereco;
+import br.com.fiap.techchallenge.exceptions.DuplicateEmailException;
 import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.DonoRestauranteRepository;
+import br.com.fiap.techchallenge.repositories.UsuarioRepository;
 import br.com.fiap.techchallenge.services.DonoRestauranteService;
 import br.com.fiap.techchallenge.services.EnderecoService;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DonoRestauranteServiceImpl implements DonoRestauranteService {
     private final DonoRestauranteRepository donoRestauranteRepository;
+    private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final EnderecoService enderecoService;
 
@@ -36,6 +39,14 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
 
     @Override
     public DonoRestaurante create(DonoRestauranteRequestDTO donoRestaurante) {
+        if (usuarioRepository.findByEmail(donoRestaurante.email()).isPresent()) {
+            throw new DuplicateEmailException(donoRestaurante.email());
+        }
+        
+        if (donoRestaurante.senha() == null || donoRestaurante.senha().isEmpty()) {
+            throw new IllegalArgumentException("Senha é obrigatória na criação de dono de restaurante");
+        }
+        
         DonoRestaurante dono = new DonoRestaurante(
                 donoRestaurante.nome(),
                 donoRestaurante.email(),
@@ -59,23 +70,34 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
     public DonoRestaurante update(DonoRestauranteRequestDTO dono, Long id) {
         DonoRestaurante donoRestaurante = donoRestauranteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
 
+        usuarioRepository.findByEmail(dono.email()).ifPresent(usuario -> {
+            if (!usuario.getId().equals(id)) {
+                throw new DuplicateEmailException(dono.email());
+            }
+        });
+
         donoRestaurante.setNome(dono.nome());
         donoRestaurante.setEmail(dono.email());
 
-        if(donoRestaurante.getSenha() != null && !donoRestaurante.getSenha().isEmpty()){
-            donoRestaurante.setSenha(passwordEncoder.encode(donoRestaurante.getSenha()));
+        if(dono.senha() != null && !dono.senha().isEmpty()){
+            donoRestaurante.setSenha(passwordEncoder.encode(dono.senha()));
         }
 
-        if(donoRestaurante.getEndereco() == null){
-            Endereco endereco = donoRestaurante.getEndereco() == null ? new Endereco() : donoRestaurante.getEndereco();
-            BeanUtils.copyProperties(donoRestaurante.getEndereco(), endereco);
-            donoRestaurante.setEndereco(endereco);
+        if(dono.endereco() != null){
+            if (donoRestaurante.getEndereco() == null) {
+                Endereco endereco = new Endereco();
+                BeanUtils.copyProperties(dono.endereco(), endereco);
+                donoRestaurante.setEndereco(endereco);
+            } else {
+                BeanUtils.copyProperties(dono.endereco(), donoRestaurante.getEndereco(), "id");
+            }
         }else{
             donoRestaurante.setEndereco(null);
         }
+        
         donoRestaurante.setDataUltimaAlteracao(Instant.now());
         DonoRestaurante donoRestauranteSalvo = donoRestauranteRepository.save(donoRestaurante);
-        return donoRestauranteRepository.save(donoRestauranteSalvo);
+        return donoRestauranteSalvo;
     }
 
     @Override

@@ -5,8 +5,10 @@ import br.com.fiap.techchallenge.controllers.dto.ClienteResponseDTO;
 import br.com.fiap.techchallenge.controllers.dto.EnderecoRequestDTO;
 import br.com.fiap.techchallenge.domain.Cliente;
 import br.com.fiap.techchallenge.domain.Endereco;
+import br.com.fiap.techchallenge.exceptions.DuplicateEmailException;
 import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.ClienteRepository;
+import br.com.fiap.techchallenge.repositories.UsuarioRepository;
 import br.com.fiap.techchallenge.services.ClienteService;
 import br.com.fiap.techchallenge.services.EnderecoService;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
+    private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final EnderecoService enderecoService;
 
@@ -40,6 +43,14 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponseDTO create(ClienteRequestDTO clienteRequestDTO) {
+        if (usuarioRepository.findByEmail(clienteRequestDTO.getEmail()).isPresent()) {
+            throw new DuplicateEmailException(clienteRequestDTO.getEmail());
+        }
+        
+        if (clienteRequestDTO.getSenha() == null || clienteRequestDTO.getSenha().isEmpty()) {
+            throw new IllegalArgumentException("Senha é obrigatória na criação de cliente");
+        }
+        
         Cliente cliente = new Cliente();
         BeanUtils.copyProperties(clienteRequestDTO, cliente, "senha", "endereco");
         cliente.setSenha(passwordEncoder.encode(clienteRequestDTO.getSenha()));
@@ -58,18 +69,31 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteResponseDTO update(ClienteRequestDTO clienteRequestDTO, Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Cliente não encontrado"));
+        
+        usuarioRepository.findByEmail(clienteRequestDTO.getEmail()).ifPresent(usuario -> {
+            if (!usuario.getId().equals(id)) {
+                throw new DuplicateEmailException(clienteRequestDTO.getEmail());
+            }
+        });
+        
         cliente.setNome(clienteRequestDTO.getNome());
         cliente.setEmail(clienteRequestDTO.getEmail());
         if (clienteRequestDTO.getSenha() != null && !clienteRequestDTO.getSenha().isEmpty()) {
             cliente.setSenha(passwordEncoder.encode(clienteRequestDTO.getSenha()));
         }
+        
         if (clienteRequestDTO.getEndereco() != null) {
-            Endereco endereco = cliente.getEndereco() == null ? new Endereco() : cliente.getEndereco();
-            BeanUtils.copyProperties(clienteRequestDTO.getEndereco(), endereco);
-            cliente.setEndereco(endereco);
+            if (cliente.getEndereco() == null) {
+                Endereco endereco = new Endereco();
+                BeanUtils.copyProperties(clienteRequestDTO.getEndereco(), endereco);
+                cliente.setEndereco(endereco);
+            } else {
+                BeanUtils.copyProperties(clienteRequestDTO.getEndereco(), cliente.getEndereco(), "id");
+            }
         } else {
             cliente.setEndereco(null);
         }
+        
         cliente.setDataUltimaAlteracao(Instant.now());
         Cliente clienteSalvo = clienteRepository.save(cliente);
         return new ClienteResponseDTO(clienteSalvo);
