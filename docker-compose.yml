@@ -1,32 +1,62 @@
 services:
-  #Serviço da aplicação
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    container_name: techchallenge_app
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/techchallenge
-      SPRING_DATASOURCE_USERNAME: usuario_teste
-      SPRING_DATASOURCE_PASSWORD: password123
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-
-  #Serviço do banco de dados
+  # Serviço do banco de dados
   db:
     image: mysql:8.0
     container_name: mysql_db_prod
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
     environment:
-      MYSQL_DATABASE: techchallenge
-      MYSQL_USER: usuario_teste
-      MYSQL_PASSWORD: password123
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: techchallenge_dev
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
     ports:
       - "3307:3306"
     volumes:
       - db_data_prod:/var/lib/mysql
       - ./initdb.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - techchallenge-network
+
+  # Serviço da aplicação
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: techchallenge:latest
+    container_name: techchallenge_app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/techchallenge_dev?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      API_SECURITY_TOKEN_SECRET: U7x!A%D*G-KaPdSgVkYp3s6v9y$B&E)H+MbQeThWmZq4t7w!z%C*F-J@NcRf
+      JAVA_OPTS: "-Xms256m -Xmx512m -Djava.security.egd=file:/dev/./urandom"
+      SPRING_PROFILES_ACTIVE: prod
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/api/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - techchallenge-network
+
+networks:
+  techchallenge-network:
+    driver: bridge
 
 volumes:
   db_data_prod:

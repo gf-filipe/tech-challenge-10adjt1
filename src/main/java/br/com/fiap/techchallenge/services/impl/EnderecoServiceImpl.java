@@ -8,7 +8,6 @@ import br.com.fiap.techchallenge.exceptions.UserNotFoundException;
 import br.com.fiap.techchallenge.repositories.EnderecoRepository;
 import br.com.fiap.techchallenge.repositories.UsuarioRepository;
 import br.com.fiap.techchallenge.services.EnderecoService;
-import br.com.fiap.techchallenge.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 public class EnderecoServiceImpl implements EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final UsuarioRepository usuarioRepository;
-    private final UsuarioService usuarioService;
 
     @Override
     public List<EnderecoResponseDTO> findAll() {
