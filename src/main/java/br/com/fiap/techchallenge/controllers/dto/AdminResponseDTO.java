@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.controllers.dto;
 
 import br.com.fiap.techchallenge.domain.Admin;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +15,23 @@ import java.time.Instant;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Schema(description = "DTO para resposta de administrador")
 public class AdminResponseDTO {
+    @Schema(description = "Nome do administrador", example = "Maria Souza")
     private String nome;
+
+    @Schema(description = "Email do administrador", example = "maria.souza@email.com")
     private String email;
 
+    @Schema(description = "Data de criação", example = "01-01-2024 10:00")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", timezone = "America/Sao_Paulo")
     private Instant dataCriacao;
+
+    @Schema(description = "Data da última alteração", example = "01-01-2024 10:00")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", timezone = "America/Sao_Paulo")
     private Instant dataUltimaAlteracao;
+
+    @Schema(description = "Endereço do administrador")
     private EnderecoDTO endereco;
 
     public AdminResponseDTO(Admin Admin) {

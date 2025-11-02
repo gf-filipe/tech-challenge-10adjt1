@@ -12,14 +12,11 @@ import lombok.*;
 @RequiredArgsConstructor
 @Schema(description = "DTO para endereço")
 public class EnderecoDTO {
-    @Schema(description = "ID do endereço", example = "1")
-    private Long id;
-
-    @Schema(description = "Nome da rua", example = "Av. Paulista", required = true)
+    @Schema(description = "Nome da rua", example = "Rua dos Admins", required = true)
     @NotBlank(message = "Rua é obrigatória")
     private String rua;
 
-    @Schema(description = "Número", example = "1000", required = true)
+    @Schema(description = "Número", example = "10", required = true)
     @NotBlank(message = "Número é obrigatório")
     private String numero;
 
@@ -27,12 +24,12 @@ public class EnderecoDTO {
     @NotBlank(message = "Cidade é obrigatória")
     private String cidade;
 
-    @Schema(description = "CEP", example = "01310-100", required = true)
+    @Schema(description = "CEP", example = "01000-001", required = true)
     @NotBlank(message = "CEP é obrigatório")
     @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "CEP inválido")
     private String cep;
 
-    @Schema(description = "Complemento", example = "Apto 123")
+    @Schema(description = "Complemento", example = "Bloco A")
     private String complemento;
 
     public EnderecoDTO(Endereco endereco) {

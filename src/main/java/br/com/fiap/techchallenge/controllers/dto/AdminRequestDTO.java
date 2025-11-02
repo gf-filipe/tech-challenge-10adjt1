@@ -1,26 +1,35 @@
 package br.com.fiap.techchallenge.controllers.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Schema(description = "DTO para requisição de criação/atualização de administrador")
 public class AdminRequestDTO {
-    private Long id;
+    @Schema(description = "Nome do administrador", example = "Admin Master", required = true)
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
-    private String email;
-    private String senha;
-    private EnderecoDTO endereco;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", timezone = "America/Sao_Paulo")
-    private Instant dataCriacao;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", timezone = "America/Sao_Paulo")
-    private Instant dataUltimaAlteracao;
+    @Schema(description = "Email do administrador", example = "admin@techchallenge.com", required = true)
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email inválido")
+    private String email;
+
+    @Schema(description = "Senha do administrador", example = "123456", required = true)
+    @NotBlank(message = "Senha é obrigatória")
+    private String senha;
+
+    @Schema(description = "Endereço do administrador")
+    @Valid
+    private EnderecoDTO endereco;
 }
