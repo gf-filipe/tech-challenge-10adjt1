@@ -90,7 +90,7 @@ public class ClienteServiceImpl implements ClienteService {
             } else {
                 BeanUtils.copyProperties(clienteRequestDTO.getEndereco(), cliente.getEndereco(), "id");
             }
-        } else {
+        } else if(cliente.getEndereco() == null) {
             cliente.setEndereco(null);
         }
         

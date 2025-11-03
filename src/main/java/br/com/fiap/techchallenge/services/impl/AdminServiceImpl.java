@@ -100,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
             } else {
                 BeanUtils.copyProperties(adminRequestDTO.getEndereco(), admin.getEndereco(), "id");
             }
-        } else {
+        } else if(admin.getEndereco() == null) {
             admin.setEndereco(null);
         }
 

@@ -91,7 +91,7 @@ public class DonoRestauranteServiceImpl implements DonoRestauranteService {
             } else {
                 BeanUtils.copyProperties(dono.endereco(), donoRestaurante.getEndereco(), "id");
             }
-        }else{
+        } else if(donoRestaurante.getEndereco() == null) {
             donoRestaurante.setEndereco(null);
         }
         
