@@ -110,9 +110,9 @@ public class DonoRestauranteController {
             @ApiResponse(responseCode = "403", description = "Proibido", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDonoRestaurante(
+    public ResponseEntity<Object> deleteDonoRestaurante(
             @Parameter(description = "ID do dono de restaurante", required = true) @PathVariable Long id) {
         donoRestauranteService.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).body("Dono de restaurante deletado com sucesso");
     }
 }
