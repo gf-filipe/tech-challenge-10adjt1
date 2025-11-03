@@ -156,59 +156,60 @@ CREATE TABLE IF NOT EXISTS historico (
 -- =================================================================================
 -- INSERTS ATUALIZADOS PARA O MODELO JOINED
 -- =================================================================================
-INSERT INTO tipo_restaurante (tipo) VALUES ('MASSA'),('VEGANO'),('TEMÁTICO'),('FAMILIAR'),('JAPONESA'),('BRASILEIRA'),('PIZZARIA'),('HAMBURGUERIA');
-INSERT INTO status_restaurante (status) VALUES ('ABERTO'),('FECHADO'),('TEMPORARIAMENTE FECHADO');
-INSERT INTO status_pedido (status) VALUES ('PENDENTE'),('FINALIZADO'),('CANCELADO'),('EM_PREPARACAO'),('ENTREGUE');
-INSERT INTO tipo_historico (tipo) VALUES ('PEDIDO'), ('VENDA');
-
-INSERT INTO endereco (rua, numero, cidade, cep, complemento) VALUES
-('Rua dos Admins', '10', 'São Paulo', '01000-001', 'Bloco A'),
-('Avenida dos Negócios', '200', 'Rio de Janeiro', '20000-002', 'Sala 50'),
-('Praça da Liberdade', '30', 'Belo Horizonte', '30140-010', NULL),
-('Rua das Flores', '45', 'Curitiba', '80010-010', 'Apto 101'),
-('Rua Principal da Pizza', '1000', 'São Paulo', '05425-070', 'Loja 1'),
-('Avenida Saborosa', '550', 'São Paulo', '04538-132', 'Filial Itaim');
+-- INSERT INTO tipo_restaurante (tipo) VALUES ('MASSA'),('VEGANO'),('TEMÁTICO'),('FAMILIAR'),('JAPONESA'),('BRASILEIRA'),('PIZZARIA'),('HAMBURGUERIA');
+-- INSERT INTO status_restaurante (status) VALUES ('ABERTO'),('FECHADO'),('TEMPORARIAMENTE FECHADO');
+-- INSERT INTO status_pedido (status) VALUES ('PENDENTE'),('FINALIZADO'),('CANCELADO'),('EM_PREPARACAO'),('ENTREGUE');
+-- INSERT INTO tipo_historico (tipo) VALUES ('PEDIDO'), ('VENDA');
+--
+-- INSERT INTO endereco (rua, numero, cidade, cep, complemento) VALUES
+-- ('Rua dos Admins', '10', 'São Paulo', '01000-001', 'Bloco A'),
+-- ('Avenida dos Negócios', '200', 'Rio de Janeiro', '20000-002', 'Sala 50'),
+-- ('Praça da Liberdade', '30', 'Belo Horizonte', '30140-010', NULL),
+-- ('Rua das Flores', '45', 'Curitiba', '80010-010', 'Apto 101'),
+-- ('Rua Principal da Pizza', '1000', 'São Paulo', '05425-070', 'Loja 1'),
+-- ('Avenida Saborosa', '550', 'São Paulo', '04538-132', 'Filial Itaim');
 
 -- 1. Inserindo dados na tabela PAI `usuario`, a senha é 123456 e está criptografada
-INSERT INTO usuario (id, nome, email, senha, data_criacao, data_ultima_alteracao, id_endereco) VALUES
-(1, 'Admin Master', 'admin@techchallenge.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 1),
-(2, 'Carlos Pereira', 'carlos.dono@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 2),
-(3, 'Ana Silva', 'ana.cliente@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 3),
-(4, 'Bruno Costa', 'bruno.cliente@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 4);
+-- INSERT INTO usuario (id, nome, email, senha, data_criacao, data_ultima_alteracao, id_endereco) VALUES
+-- (1, 'Admin Master', 'admin@techchallenge.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 1),
+-- (2, 'Carlos Pereira', 'carlos.dono@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 2),
+-- (3, 'Ana Silva', 'ana.cliente@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 3),
+-- (4, 'Bruno Costa', 'bruno.cliente@email.com', '$2a$10$52q6BoLUpbuq/2XylZL8JulkJUFQiWg4kNNIKPXBFr6GI3n/0XPvy', NOW(), NOW(), 4);
 
 -- 2. NOVO: Inserindo os IDs nas tabelas FILHAS para definir o tipo de cada usuário
-INSERT INTO admin (id) VALUES (1);
-INSERT INTO dono_restaurante (id) VALUES (2);
-INSERT INTO cliente (id) VALUES (3);
-INSERT INTO cliente (id) VALUES (4);
+-- INSERT INTO admin (id) VALUES (1);
+-- INSERT INTO dono_restaurante (id) VALUES (2);
+-- INSERT INTO cliente (id) VALUES (3);
+-- INSERT INTO cliente (id) VALUES (4);
 
 -- 3. Inserindo dados nas outras tabelas (sem alterações no conteúdo, apenas nas FKs que já foram ajustadas acima)
-INSERT INTO restaurante (nome, descricao, telefone, email, hora_abertura, hora_fechamento, id_dono_restaurante, id_status_restaurante) VALUES
-('Pizzaria do Carlos', 'A melhor pizza da cidade, com massa artesanal.', '11999998888', 'contato@pizzadocarlos.com', '18:00:00', '23:30:00', 2, 1);
+-- INSERT INTO restaurante (nome, descricao, telefone, email, hora_abertura, hora_fechamento, id_dono_restaurante, id_status_restaurante) VALUES
+-- ('Pizzaria do Carlos', 'A melhor pizza da cidade, com massa artesanal.', '11999998888', 'contato@pizzadocarlos.com', '18:00:00', '23:30:00', 2, 1);
+--
+-- INSERT INTO restaurante_endereco (id_restaurante, id_endereco) VALUES (1, 5), (1, 6);
+-- INSERT INTO restaurante_tipo (id_restaurante, id_tipo_restaurante) VALUES (1, 7), (1, 1);
+--
+-- INSERT INTO cardapio (nome, preco, id_restaurante) VALUES
+-- ('Pizza Margherita', 45.50, 1),
+-- ('Pizza Calabresa', 52.00, 1),
+-- ('Refrigerante Lata', 8.00, 1),
+-- ('Tiramisu', 22.50, 1);
 
-INSERT INTO restaurante_endereco (id_restaurante, id_endereco) VALUES (1, 5), (1, 6);
-INSERT INTO restaurante_tipo (id_restaurante, id_tipo_restaurante) VALUES (1, 7), (1, 1);
-
-INSERT INTO cardapio (nome, preco, id_restaurante) VALUES
-('Pizza Margherita', 45.50, 1),
-('Pizza Calabresa', 52.00, 1),
-('Refrigerante Lata', 8.00, 1),
-('Tiramisu', 22.50, 1);
-
-INSERT INTO pedido (id_cliente, id_restaurante, id_endereco_entrega, id_status_pedido) VALUES
-(3, 1, 3, 5),
-(4, 1, 4, 4);
-
-INSERT INTO pedido_item (id_pedido, id_cardapio, quantidade, preco_unitario) VALUES
-(1, 1, 1, 45.50),
-(1, 3, 2, 8.00),
-(2, 2, 2, 52.00);
-
-INSERT INTO historico (id_usuario, id_pedido, id_tipo_historico) VALUES
-(3, 1, 1),
-(2, 1, 2),
-(4, 2, 1),
-(2, 2, 2);
+--Precisa refatorar o metodo delete, por enquanto vai ficar sem esses inserts(para proxima etapa)
+-- INSERT INTO pedido (id_cliente, id_restaurante, id_endereco_entrega, id_status_pedido) VALUES
+-- (3, 1, 3, 5),
+-- (4, 1, 4, 4);
+--
+-- INSERT INTO pedido_item (id_pedido, id_cardapio, quantidade, preco_unitario) VALUES
+-- (1, 1, 1, 45.50),
+-- (1, 3, 2, 8.00),
+-- (2, 2, 2, 52.00);
+--
+-- INSERT INTO historico (id_usuario, id_pedido, id_tipo_historico) VALUES
+-- (3, 1, 1),
+-- (2, 1, 2),
+-- (4, 2, 1),
+-- (2, 2, 2);
 
 
 -- =================================================================================
