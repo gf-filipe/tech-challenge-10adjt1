@@ -443,9 +443,9 @@ Desenvolvido como parte do **Tech Challenge da FIAP - ADJ**.
 **Repositório**: [tech-challenge-10adjt1](https://github.com/gf-filipe/tech-challenge-10adjt1)
 
 **Equipe:**
-- Filipe ([gf-filipe](https://github.com/gf-filipe))
+- Filipe Ferreira ([gf-filipe](https://github.com/gf-filipe))
 - Lucas Escolástico ([lucasescol](https://github.com/lucasescol))
-- Leandro Recife ([CabeloSG](https://github.com/CabeloSG))
+- Leandro Gonçalves ([CabeloSG](https://github.com/CabeloSG))
 - Alex Sousa Alves ([AlexSousaAlvess](https://github.com/AlexSousaAlvess))
 - Lucas Souza ([LucasSouza1407](https://github.com/LucasSouza1407))
 
